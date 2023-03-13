@@ -10,19 +10,19 @@ public class Posicao {
 
 	}
 
-	public Integer getRow() {
+	public Integer getLinha() {
 		return linha;
 	}
 
-	public void setRow(Integer linha) {
+	public void setLinha(Integer linha) {
 		this.linha = linha;
 	}
 
-	public Integer getColumn() {
+	public Integer getColuna() {
 		return coluna;
 	}
 
-	public void setColumn(Integer coluna) {
+	public void setColuna(Integer coluna) {
 		this.coluna = coluna;
 	}
 
