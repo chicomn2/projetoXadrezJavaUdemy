@@ -1,6 +1,5 @@
 package xadrez;
 
-import tabuleirodejogo.Posicao;
 import tabuleirodejogo.Tabuleiro;
 import xadrez.pecas.Bispo;
 import xadrez.pecas.Cavalo;
@@ -27,41 +26,36 @@ public class PartidaXadrez {
 		return tab;
 
 	}
+	
+	private void colocaPecaNova(char coluna, int linha, PecaXadrez peca) {
+		tabuleiro.colocarPeca(peca, new PosicaoXadrez(coluna, linha).paraPosicao());
+		
+	}
 
-	private void setupInicial() {
+	private void setupInicial() {		
+		colocaPecaNova('a', 1, new Torre(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('h', 1, new Torre(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('a', 8, new Torre(tabuleiro, Cor.PRETA));
+		colocaPecaNova('h', 8, new Torre(tabuleiro, Cor.PRETA));
+		colocaPecaNova('b', 1, new Cavalo(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('g', 1, new Cavalo(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('b', 8, new Cavalo(tabuleiro, Cor.PRETA));
+		colocaPecaNova('g', 8, new Cavalo(tabuleiro, Cor.PRETA));
+		colocaPecaNova('c', 1, new Bispo(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('f', 1, new Bispo(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('c', 8, new Bispo(tabuleiro, Cor.PRETA));
+		colocaPecaNova('f', 8, new Bispo(tabuleiro, Cor.PRETA));
+		colocaPecaNova('d', 1, new Dama(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('d', 8, new Dama(tabuleiro, Cor.PRETA));
+		colocaPecaNova('e', 1, new Rei(tabuleiro, Cor.BRANCA));
+		colocaPecaNova('e', 8, new Rei(tabuleiro, Cor.PRETA));
+		for(char c = 'a';c<='h';c++) {
+			colocaPecaNova(c,2 , new Peao(tabuleiro, Cor.BRANCA));
+			}
+		for(char c = 'a';c<='h';c++) {
+			colocaPecaNova(c,7 , new Peao(tabuleiro, Cor.PRETA));
+			}
 
-		tabuleiro.colocarPeca(new Torre(tabuleiro, Cor.PRETA), new Posicao(0, 0));
-		tabuleiro.colocarPeca(new Cavalo(tabuleiro, Cor.PRETA), new Posicao(0, 1));
-		tabuleiro.colocarPeca(new Bispo(tabuleiro, Cor.PRETA), new Posicao(0, 2));
-		tabuleiro.colocarPeca(new Dama(tabuleiro, Cor.PRETA), new Posicao(0, 3));
-		tabuleiro.colocarPeca(new Rei(tabuleiro, Cor.PRETA), new Posicao(0, 4));
-		tabuleiro.colocarPeca(new Bispo(tabuleiro, Cor.PRETA), new Posicao(0, 5));
-		tabuleiro.colocarPeca(new Cavalo(tabuleiro, Cor.PRETA), new Posicao(0, 6));
-		tabuleiro.colocarPeca(new Torre(tabuleiro, Cor.PRETA), new Posicao(0, 7));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 0));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 1));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 2));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 3));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 4));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 5));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 6));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.PRETA), new Posicao(1, 7));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 0));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 1));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 2));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 3));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 4));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 5));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 6));
-		tabuleiro.colocarPeca(new Peao(tabuleiro, Cor.BRANCA), new Posicao(6, 7));
-		tabuleiro.colocarPeca(new Torre(tabuleiro, Cor.BRANCA), new Posicao(7, 0));
-		tabuleiro.colocarPeca(new Cavalo(tabuleiro, Cor.BRANCA), new Posicao(7, 1));
-		tabuleiro.colocarPeca(new Bispo(tabuleiro, Cor.BRANCA), new Posicao(7, 2));
-		tabuleiro.colocarPeca(new Dama(tabuleiro, Cor.BRANCA), new Posicao(7, 3));
-		tabuleiro.colocarPeca(new Rei(tabuleiro, Cor.BRANCA), new Posicao(7, 4));
-		tabuleiro.colocarPeca(new Bispo(tabuleiro, Cor.BRANCA), new Posicao(7, 5));
-		tabuleiro.colocarPeca(new Cavalo(tabuleiro, Cor.BRANCA), new Posicao(7, 6));
-		tabuleiro.colocarPeca(new Torre(tabuleiro, Cor.BRANCA), new Posicao(7, 7));
 
 	}
 
