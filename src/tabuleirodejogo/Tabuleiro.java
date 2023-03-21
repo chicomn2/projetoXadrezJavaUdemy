@@ -7,7 +7,7 @@ public class Tabuleiro {
 
 	public Tabuleiro(Integer linhas, Integer colunas) {
 		if(linhas<1||colunas<1){
-			throw new ExcecaoTabuleiro("Erro criando tabuleiro, é necessário que haja pelo menos 1 linha e 1 coluna");
+			throw new ExcecaoTabuleiro("Erro criando tabuleiro, é necessário que haja pelo menos 1 linha e 1 coluna.");
 		}
 				this.linhas = linhas;
 		this.colunas = colunas;
@@ -47,7 +47,7 @@ public class Tabuleiro {
 	
 	public Peca removePeca(Posicao posicao) {
 		if(!posicaoExiste(posicao)) {
-			throw new ExcecaoTabuleiro("essa poisção não existe");
+			throw new ExcecaoTabuleiro("Essa poisção não existe.");
 			
 		}
 		if (peca(posicao)== null) {

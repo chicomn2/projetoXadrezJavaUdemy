@@ -47,7 +47,11 @@ public class PartidaXadrez {
 	
 	private void validarPosicaoOrigem(Posicao posicao) {
 		if(!tabuleiro.temPecaAi(posicao)) {
-			throw new ExcecaoXadrez("Não existe peça na posição origem");
+			throw new ExcecaoXadrez("Não existe peça na posição origem.");
+		}
+		
+		if(!tabuleiro.peca(posicao).haMovimentoPossivel()) {
+			throw new ExcecaoXadrez("Não há movimentos possíveis para a peça origem.");
 		}
 	}
 		
