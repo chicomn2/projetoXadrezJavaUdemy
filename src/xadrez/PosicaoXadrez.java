@@ -11,6 +11,7 @@ public class PosicaoXadrez {
 		}
 		this.coluna = coluna;
 		this.linha = linha;
+		
 	}
 	public Character getColuna() {
 		return coluna;
@@ -25,7 +26,7 @@ public class PosicaoXadrez {
 	}
 	
 	protected static PosicaoXadrez daPosicao (Posicao posicao)	{
-		return new PosicaoXadrez((char)('a'-posicao.getColuna()), 8-posicao.getLinha());
+		return new PosicaoXadrez((char)('a'+posicao.getColuna()), 8-posicao.getLinha());
 	}
 	@Override
 	public String toString() {

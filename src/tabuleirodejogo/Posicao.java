@@ -23,6 +23,11 @@ public class Posicao {
 	}
 
 	public void setColuna(Integer coluna) {
+		this.coluna = coluna;				
+		}
+	
+	public void setValores(int linha, int coluna) {
+		this.linha = linha;
 		this.coluna = coluna;
 	}
 
