@@ -66,53 +66,49 @@ public class Dama extends PecaXadrez {
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
 
-		// Diagonal direita superior
-		p.setValores(posicao.getLinha() + 1, posicao.getColuna() + 1);
-		while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() + 1);
-			p.setColuna(p.getColuna() + 1);
-		}
-
-		if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-		}
-
 		// Diagonal direita inferior
-		p.setValores(posicao.getLinha() - 1, posicao.getColuna() + 1);
-		while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() - 1);
-			p.setColuna(p.getColuna() + 1);
-		}
+				p.setValores(posicao.getLinha() + 1, posicao.getColuna() + 1);
+				while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+					p.setValores(p.getLinha() + 1,p.getColuna() + 1);
+				}
 
-		if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-		}
+				if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+				}
 
-		// Diagonal esquerda superior
-		p.setValores(posicao.getLinha() + 1, posicao.getColuna() - 1);
-		while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() + 1);
-			p.setColuna(p.getColuna() - 1);
-		}
+				// Diagonal direita superior
+				p.setValores(posicao.getLinha() - 1, posicao.getColuna() + 1);
+				while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+					p.setValores(p.getLinha() - 1,p.getColuna() + 1);
+				}
 
-		if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-		}
+				if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+				}
 
-		// Diagonal esquerda inferior
-		p.setValores(posicao.getLinha() - 1, posicao.getColuna() - 1);
-		while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-			p.setLinha(p.getLinha() - 1);
-			p.setColuna(p.getColuna() - 1);
-		}
+				// Diagonal esquerda inferior
+				p.setValores(posicao.getLinha() + 1, posicao.getColuna() - 1);
+				while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+					p.setValores(p.getLinha() + 1,p.getColuna() - 1);
+				}
 
-		if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
-			mat[p.getLinha()][p.getColuna()] = true;
-		}
+				if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+				}
+
+				// Diagonal esquerda superior
+				p.setValores(posicao.getLinha() - 1, posicao.getColuna() - 1);
+				while (getTabuleiro().posicaoExiste(p) && !getTabuleiro().temPecaAi(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+					p.setValores(p.getLinha() - 1,p.getColuna() - 1);
+				}
+
+				if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
+					mat[p.getLinha()][p.getColuna()] = true;
+				}
 
 		return mat;
 	}

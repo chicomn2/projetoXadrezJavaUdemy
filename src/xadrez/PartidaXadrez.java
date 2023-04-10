@@ -94,6 +94,24 @@ public class PartidaXadrez {
 			pecasCapturadas.add(pecaCapturada);
 		}
 
+		// #Movimento especial "Roque Pequeno"
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
+			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
+			PecaXadrez torre = (PecaXadrez) tabuleiro.removePeca(origemT);
+			tabuleiro.colocarPeca(torre, destinoT);
+			torre.amuentaContadorDeMovimentos();
+		}
+
+		// #Movimento especial "Roque Grande"
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
+			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
+			PecaXadrez torre = (PecaXadrez) tabuleiro.removePeca(origemT);
+			tabuleiro.colocarPeca(torre, destinoT);
+			torre.amuentaContadorDeMovimentos();
+		}
+
 		return pecaCapturada;
 
 	}
@@ -107,6 +125,24 @@ public class PartidaXadrez {
 			pecasCapturadas.remove(pecaCapturada);
 			pecasNoTabuleiro.add(pecaCapturada);
 		}
+		// #Movimento especial "Roque Pequeno"
+				if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+					Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
+					Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
+					PecaXadrez torre = (PecaXadrez) tabuleiro.removePeca(destinoT);
+					tabuleiro.colocarPeca(torre, origemT);
+					torre.diminuiContadorDeMovimentos();
+				}
+
+				// #Movimento especial "Roque Grande"
+				if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+					Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
+					Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
+					PecaXadrez torre = (PecaXadrez) tabuleiro.removePeca(destinoT);
+					tabuleiro.colocarPeca(torre, origemT);
+					torre.diminuiContadorDeMovimentos();
+				}
+	
 	}
 
 	private void validarPosicaoOrigem(Posicao posicao) {
@@ -210,13 +246,15 @@ public class PartidaXadrez {
 		colocaPecaNova('f', 8, new Bispo(tabuleiro, Cor.PRETAS));
 		colocaPecaNova('d', 1, new Dama(tabuleiro, Cor.BRANCAS));
 		colocaPecaNova('d', 8, new Dama(tabuleiro, Cor.PRETAS));
-		colocaPecaNova('e', 1, new Rei(tabuleiro, Cor.BRANCAS));
-		colocaPecaNova('e', 8, new Rei(tabuleiro, Cor.PRETAS));
-		
-		 for(char c = 'a';c<='h';c++) { colocaPecaNova(c,2 , new Peao(tabuleiro,
-		 Cor.BRANCAS)); } for(char c = 'a';c<='h';c++) { colocaPecaNova(c,7 , new
-		 Peao(tabuleiro, Cor.PRETAS)); }
-		 
+		colocaPecaNova('e', 1, new Rei(tabuleiro, Cor.BRANCAS, this));
+		colocaPecaNova('e', 8, new Rei(tabuleiro, Cor.PRETAS, this));
+
+		for (char c = 'a'; c <= 'h'; c++) {
+			colocaPecaNova(c, 2, new Peao(tabuleiro, Cor.BRANCAS));
+		}
+		for (char c = 'a'; c <= 'h'; c++) {
+			colocaPecaNova(c, 7, new Peao(tabuleiro, Cor.PRETAS));
+		}
 
 	}
 

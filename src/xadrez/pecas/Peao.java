@@ -38,8 +38,8 @@ public class Peao extends PecaXadrez {
 
 			// acima 2 linhas
 			p.setValores(posicao.getLinha() - 2, posicao.getColuna());
-			Posicao p2 = new Posicao(p.getLinha() - 1, p.getColuna());
-			if (getTabuleiro().posicaoExiste(p) && getTabuleiro().posicaoExiste(p2) && !getTabuleiro().temPecaAi(p)
+			Posicao p2 = new Posicao(p.getLinha() - 2, p.getColuna());
+			if (getTabuleiro().posicaoExiste(p)&& !getTabuleiro().temPecaAi(p) && getTabuleiro().posicaoExiste(p2) 
 					&& !getTabuleiro().temPecaAi(p2) && getContadorDeMovimentos() == 0) {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
@@ -66,8 +66,8 @@ public class Peao extends PecaXadrez {
 
 			// abaixo 2 linhas
 			p.setValores(posicao.getLinha() + 2, posicao.getColuna());
-			Posicao p2 = new Posicao(p.getLinha() + 1, p.getColuna());
-			if (getTabuleiro().posicaoExiste(p) && getTabuleiro().posicaoExiste(p2) && !getTabuleiro().temPecaAi(p)
+			Posicao p2 = new Posicao(p.getLinha() + 2, p.getColuna());
+			if (getTabuleiro().posicaoExiste(p) && getTabuleiro().posicaoExiste(p2) 
 					&& !getTabuleiro().temPecaAi(p2) && getContadorDeMovimentos() == 0) {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
