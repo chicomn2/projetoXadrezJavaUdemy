@@ -21,7 +21,7 @@ public class Programa {
 		Locale.setDefault(Locale.US);
 		PartidaXadrez partidaXadrez = new PartidaXadrez();
 		List<PecaXadrez> capturadas = new ArrayList<>(); 
-		while (true) {
+		while (!partidaXadrez.getChequeMate()) {
 			try {
 				UI.limaTela();
 				UI.imprimePartida(partidaXadrez, capturadas);
@@ -54,6 +54,9 @@ public class Programa {
 			}
 
 		}
+		
+		UI.limaTela();
+		UI.imprimePartida(partidaXadrez, capturadas);
 
 	}
 }

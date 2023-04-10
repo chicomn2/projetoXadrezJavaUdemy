@@ -22,6 +22,7 @@ public class PartidaXadrez {
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
 	private boolean cheque;
+	private boolean chequeMate;
 
 	public PartidaXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
@@ -37,9 +38,13 @@ public class PartidaXadrez {
 	public Cor getJogadorAtual() {
 		return jogadorAtual;
 	}
-	
+
 	public boolean getCheque() {
 		return cheque;
+	}
+
+	public boolean getChequeMate() {
+		return chequeMate;
 	}
 
 	public PecaXadrez[][] getPecas() {
@@ -65,17 +70,22 @@ public class PartidaXadrez {
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = fazerMovimento(origem, destino);
-		if(testeCheque(jogadorAtual)) {
+		if (testeCheque(jogadorAtual)) {
 			desfazerMovimento(origem, destino, pecaCapturada);
 			throw new ExcecaoXadrez("Você se colocou em cheque, refaça o movimento");
 		}
-		cheque = (testeCheque(oponente(jogadorAtual)))? true: false;
-		proximoTurno();
+		cheque = (testeCheque(oponente(jogadorAtual))) ? true : false;
+		if (testeChequeMate(oponente(jogadorAtual))) {
+			chequeMate = true;
+		} else {
+			proximoTurno();
+		}
 		return (PecaXadrez) pecaCapturada;
 	}
 
 	private Peca fazerMovimento(Posicao origem, Posicao destino) {
-		Peca p = tabuleiro.removePeca(origem);
+		PecaXadrez p = (PecaXadrez) tabuleiro.removePeca(origem);
+		p.amuentaContadorDeMovimentos();
 		Peca pecaCapturada = tabuleiro.removePeca(destino);
 		tabuleiro.colocarPeca(p, destino);
 
@@ -89,7 +99,8 @@ public class PartidaXadrez {
 	}
 
 	private void desfazerMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
-		Peca p = tabuleiro.removePeca(destino);
+		PecaXadrez p = (PecaXadrez) tabuleiro.removePeca(destino);
+		p.diminuiContadorDeMovimentos();
 		tabuleiro.colocarPeca(p, origem);
 		if (pecaCapturada != null) {
 			tabuleiro.colocarPeca(pecaCapturada, destino);
@@ -128,7 +139,7 @@ public class PartidaXadrez {
 	}
 
 	private PecaXadrez rei(Cor cor) {
-		List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == cor)
+		List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor() == cor)
 				.collect(Collectors.toList());
 		for (Peca p : lista) {
 			if (p instanceof Rei) {
@@ -137,18 +148,45 @@ public class PartidaXadrez {
 		}
 		throw new IllegalStateException("Não existe rei " + cor + " no tabuleiro");
 	}
-	
+
 	private boolean testeCheque(Cor cor) {
 		Posicao posicaoRei = rei(cor).getPosicaoXadrez().paraPosicao();
 		List<Peca> pecasOponente = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor() == oponente(cor))
 				.collect(Collectors.toList());
-		for(Peca p: pecasOponente) {
+		for (Peca p : pecasOponente) {
 			boolean[][] mat = p.movimentosPossiveis();
-			if(mat[posicaoRei.getLinha()][posicaoRei.getColuna()]) {
+			if (mat[posicaoRei.getLinha()][posicaoRei.getColuna()]) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private boolean testeChequeMate(Cor cor) {
+		if (!testeCheque(cor)) {
+			return false;
+		}
+		List<Peca> list = pecasNoTabuleiro.stream().filter(x -> ((PecaXadrez) x).getCor() == cor)
+				.collect(Collectors.toList());
+		for (Peca p : list) {
+			boolean[][] mat = p.movimentosPossiveis();
+			for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+				for (int j = 0; j < tabuleiro.getColunas(); j++) {
+					if (mat[i][j]) {
+						Posicao origem = ((PecaXadrez) p).getPosicaoXadrez().paraPosicao();
+						Posicao destino = new Posicao(i, j);
+						Peca pecaCapturada = fazerMovimento(origem, destino);
+						boolean testeCheque = testeCheque(cor);
+						desfazerMovimento(origem, destino, pecaCapturada);
+						if (!testeCheque) {
+							return false;
+						}
+					}
+				}
+			}
+
+		}
+		return true;
 	}
 
 	private void colocaPecaNova(Character coluna, Integer linha, PecaXadrez peca) {
@@ -174,11 +212,11 @@ public class PartidaXadrez {
 		colocaPecaNova('d', 8, new Dama(tabuleiro, Cor.PRETAS));
 		colocaPecaNova('e', 1, new Rei(tabuleiro, Cor.BRANCAS));
 		colocaPecaNova('e', 8, new Rei(tabuleiro, Cor.PRETAS));
-		/*
-		 * for(char c = 'a';c<='h';c++) { colocaPecaNova(c,2 , new Peao(tabuleiro,
-		 * Cor.BRANCAS)); } for(char c = 'a';c<='h';c++) { colocaPecaNova(c,7 , new
-		 * Peao(tabuleiro, Cor.PRETAS)); }
-		 */
+		
+		 for(char c = 'a';c<='h';c++) { colocaPecaNova(c,2 , new Peao(tabuleiro,
+		 Cor.BRANCAS)); } for(char c = 'a';c<='h';c++) { colocaPecaNova(c,7 , new
+		 Peao(tabuleiro, Cor.PRETAS)); }
+		 
 
 	}
 
