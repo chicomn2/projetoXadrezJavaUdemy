@@ -5,8 +5,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
-import tabuleirodejogo.Posicao;
 import xadrez.Cor;
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
@@ -42,7 +40,7 @@ public class UI {
 
 	public static PosicaoXadrez lerPosicaoXadrez(Scanner sc) {
 		try {
-			String s = sc.next();
+			String s = sc.nextLine();
 			char coluna = s.charAt(0);
 			int linha = Integer.parseInt(s.substring(1));
 			return new PosicaoXadrez(coluna, linha);
