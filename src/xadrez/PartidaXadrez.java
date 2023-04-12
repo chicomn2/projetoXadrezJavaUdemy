@@ -24,6 +24,8 @@ public class PartidaXadrez {
 	private boolean cheque;
 	private boolean chequeMate;
 	private PecaXadrez vulneravelEnPassant;
+	private PecaXadrez promovida;
+	
 
 	public PartidaXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
@@ -62,6 +64,10 @@ public class PartidaXadrez {
 		return tab;
 
 	}
+	
+	public PecaXadrez getPromovida() {
+		return promovida;
+	}
 
 	public boolean[][] movimentosPossiveis(PosicaoXadrez posicaoOrigem) {
 		Posicao posicao = posicaoOrigem.paraPosicao();
@@ -80,6 +86,16 @@ public class PartidaXadrez {
 			throw new ExcecaoXadrez("Você se colocou em cheque, refaça o movimento");
 		}
 		PecaXadrez pecaMovida = (PecaXadrez) tabuleiro.peca(destino);
+		
+		// Movimento especial "Promoção"
+		promovida = null;
+		if(pecaMovida instanceof Peao) {
+			if((pecaMovida.getCor()== Cor.BRANCAS && destino.getLinha()==0)||(pecaMovida.getCor()== Cor.PRETAS && destino.getLinha()==7)) {
+				promovida = (PecaXadrez)tabuleiro.peca(destino);
+				promovida = substituirPecaPromovida("D");
+			}
+		}
+		
 
 		cheque = (testeCheque(oponente(jogadorAtual))) ? true : false;
 		if (testeChequeMate(oponente(jogadorAtual))) {
@@ -97,6 +113,36 @@ public class PartidaXadrez {
 		}
 		return (PecaXadrez) pecaCapturada;
 	}
+	
+	public PecaXadrez substituirPecaPromovida(String tipo) {
+		if(promovida==null) {
+			throw new IllegalStateException("Não há peça a ser promovida");
+		}
+		if(!tipo.equals("B")&&!tipo.equals("C")&&!tipo.equals("T")&&!tipo.equals("D")) {
+			return promovida;
+		}
+		
+		Posicao pos = promovida.getPosicaoXadrez().paraPosicao();
+		Peca p = tabuleiro.removePeca(pos);
+		pecasNoTabuleiro.remove(p);
+		
+		PecaXadrez pecaNova = pecaNova(tipo, promovida.getCor());
+		tabuleiro.colocarPeca(pecaNova, pos);
+		pecasNoTabuleiro.add(pecaNova);
+		
+		return pecaNova;
+		
+		
+		
+	}
+	
+	private PecaXadrez pecaNova(String tipo, Cor cor) {
+		if(tipo.equals("B")) return new Bispo(tabuleiro, cor);
+		if(tipo.equals("C")) return new Cavalo(tabuleiro, cor);
+		if(tipo.equals("T")) return new Torre(tabuleiro, cor);
+		return new Dama(tabuleiro, cor);
+		
+	}
 
 	private Peca fazerMovimento(Posicao origem, Posicao destino) {
 		PecaXadrez p = (PecaXadrez) tabuleiro.removePeca(origem);
@@ -109,7 +155,7 @@ public class PartidaXadrez {
 			pecasCapturadas.add(pecaCapturada);
 		}
 
-		// #Movimento especial "Roque Pequeno"
+		// Movimento especial "Roque Pequeno"
 		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
 			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
 			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
@@ -118,7 +164,7 @@ public class PartidaXadrez {
 			torre.amuentaContadorDeMovimentos();
 		}
 
-		// #Movimento especial "Roque Grande"
+		// Movimento especial "Roque Grande"
 		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
 			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
 			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
@@ -127,7 +173,7 @@ public class PartidaXadrez {
 			torre.amuentaContadorDeMovimentos();
 		}
 
-		// # Movimento especial "En Passant"
+		// Movimento especial "En Passant"
 		if (p instanceof Peao) {
 			if (origem.getColuna() != destino.getColuna() && pecaCapturada == null) {
 				Posicao posicaoPeao;
@@ -155,7 +201,7 @@ public class PartidaXadrez {
 			pecasCapturadas.remove(pecaCapturada);
 			pecasNoTabuleiro.add(pecaCapturada);
 		}
-		// #Movimento especial "Roque Pequeno"
+		// Movimento especial "Roque Pequeno"
 		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
 			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() + 3);
 			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() + 1);
@@ -164,7 +210,7 @@ public class PartidaXadrez {
 			torre.diminuiContadorDeMovimentos();
 		}
 
-		// #Movimento especial "Roque Grande"
+		// Movimento especial "Roque Grande"
 		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
 			Posicao origemT = new Posicao(origem.getLinha(), origem.getColuna() - 4);
 			Posicao destinoT = new Posicao(origem.getLinha(), origem.getColuna() - 1);
@@ -173,7 +219,7 @@ public class PartidaXadrez {
 			torre.diminuiContadorDeMovimentos();
 		}
 
-		// # Movimento especial "En Passant"
+		// Movimento especial "En Passant"
 		if (p instanceof Peao) {
 			if (origem.getColuna() != destino.getColuna() && pecaCapturada == vulneravelEnPassant) {
 				PecaXadrez peao = (PecaXadrez)tabuleiro.removePeca(destino);

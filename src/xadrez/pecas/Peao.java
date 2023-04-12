@@ -58,7 +58,7 @@ public class Peao extends PecaXadrez {
 			if (getTabuleiro().posicaoExiste(p) && temPecaDoOponente(p)) {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
-			// #Movimento especial "En Passant BRANCAS"
+			// Movimento especial "En Passant BRANCAS"
 			// Diagonal esquerda
 			if (posicao.getLinha() == 3) {
 				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
@@ -107,7 +107,7 @@ public class Peao extends PecaXadrez {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
 
-			// #Movimento especial "En Passant PRETAS"
+			// Movimento especial "En Passant PRETAS"
 			// Diagonal esquerda
 			if (posicao.getLinha() == 4) {
 				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);

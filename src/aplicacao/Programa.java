@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import tabuleirodejogo.ExcecaoTabuleiro;
-import tabuleirodejogo.Posicao;
-import tabuleirodejogo.Tabuleiro;
 import xadrez.ExcecaoXadrez;
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
@@ -40,6 +37,17 @@ public class Programa {
 				PecaXadrez pecaCapturada = partidaXadrez.efetuaMovimentoXadrez(origem, destino);
 				if(pecaCapturada != null) {
 					capturadas.add(pecaCapturada);
+				}
+				
+				if(partidaXadrez.getPromovida()!= null) {
+					System.out.print("Para qual peça o peão será promovido (B/C/T/D): ");
+					String tipo = sc.next().toUpperCase();
+					while(!tipo.equals("B")&&!tipo.equals("C")&&!tipo.equals("T")&&!tipo.equals("D")) {
+						System.out.println("Tipo inválido!");
+						System.out.print("Para qual peça o peão será promovido (B/C/T/D): ");
+						tipo = sc.next().toUpperCase();
+					}
+					partidaXadrez.substituirPecaPromovida(tipo);
 				}
 			} 
 			catch (ExcecaoXadrez e) {
